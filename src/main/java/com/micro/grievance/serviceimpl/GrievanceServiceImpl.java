@@ -69,22 +69,6 @@ public class GrievanceServiceImpl implements GrievanceService {
         return grievanceRepository.findGrievancesByDepartmentId(departmentId);
     }
     
-//    @Override
-//    public Grievance assignEmployeeToGrievance(int grievanceId, int employeeId) {
-//        Optional<Grievance> optionalGrievance = Optional.ofNullable(grievanceRepository.findById(grievanceId));
-//        Optional<Employee> optionalEmployee = Optional.ofNullable(employeeRepository.findById(employeeId));
-//
-//        if (optionalGrievance.isPresent() && optionalEmployee.isPresent()) {
-//            Grievance grievance = optionalGrievance.get();
-//            Employee employee = optionalEmployee.get();
-//
-//            grievance.setAssignedEmployee(employee);
-//            return grievanceRepository.save(grievance);
-//        } else {
-//            // Return null or handle as appropriate for your use case
-//            return null;
-//        }
-//    }
     public Grievance assignEmployeeToGrievance(int grievanceId, int employeeId) {
         Optional<Grievance> optionalGrievance = Optional.ofNullable(grievanceRepository.findById(grievanceId));
         Optional<Employee> optionalEmployee = Optional.ofNullable(employeeRepository.findById(employeeId));
@@ -127,21 +111,7 @@ public class GrievanceServiceImpl implements GrievanceService {
 	}
     
     
-    
-// for close the grievance and - the emp task count
-//    public void closeGrievance(int grievanceId) {
-//        Optional<Grievance> optionalGrievance = grievanceRepository.findById(grievanceId);
-//        if (optionalGrievance.isPresent()) {
-//            Grievance grievance = optionalGrievance.get();
-//            if (grievance.getAssignedEmployee() != null) {
-//                Employee employee = grievance.getAssignedEmployee();
-//                employee.setTaskCount(employee.getTaskCount() - 1);
-//                employeeRepository.save(employee);
-//            }
-//            grievance.setStatus("Closed");
-//            grievanceRepository.save(grievance);
-//        }
-//    }
+   
 	
 	@Override
     public int countAllGrievances() {

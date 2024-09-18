@@ -50,70 +50,6 @@ public class GrievanceController {
 	@Autowired
 	private EmployeeService employeeService;
 
-
-	
-//	@PostMapping
-//	public ResponseEntity<String> createGrievance(@RequestParam("userId") int userId,
-//	        @RequestParam("departmentId") int departmentId, @RequestParam("categoryId") int categoryId,
-//	        @RequestParam(value = "assignedEmployeeId", defaultValue = "0") int assignedEmployeeId, // Default value
-//	        @RequestParam("branchName") String branchName,
-//	        @RequestParam("description") String description, @RequestParam("status") String status,
-//	        @RequestParam("closeConfirmation") Boolean closeConfirmation,
-//	        @RequestParam("createdAt") String createdAtStr,
-//	        @RequestParam("updatedAt") String updatedAtStr,
-//	        @RequestParam("attachment") MultipartFile attachment) {
-//
-//	    try {
-//
-//	        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-//	        LocalDateTime createdAt = LocalDateTime.parse(createdAtStr, formatter);
-//	        LocalDateTime updatedAt = LocalDateTime.parse(updatedAtStr, formatter);
-//
-//	        // Validate user
-//	        User user = userService.getUserById(userId);
-//	        if (user == null) {
-//	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
-//	        }
-//
-//	        // Validate department
-//	        Department department = departmentService.getDepartmentById(departmentId);
-//	        if (department == null) {
-//	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Department Not Found");
-//	        }
-//
-//	        // Validate category
-//	        Category category = categoryService.getCategoryById(categoryId);
-//	        if (category == null) {
-//	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Category Not Found");
-//	        }
-//
-//	        // Validate employee if assignedEmployeeId is not zero
-//	        Employee employee = null;
-//	        if (assignedEmployeeId != 0) {
-//	            employee = employeeService.getEmployeeById(assignedEmployeeId);
-//	            if (employee == null) {
-//	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee Not Found");
-//	            }
-//	        }
-//
-//	        // Handling file attachment
-//	        byte[] attachmentBytes = attachment.getBytes();
-//
-//	        // Create new Grievance object
-//	        Grievance grievance = new Grievance(0, user, department, category, branchName, description, attachmentBytes,
-//	                status, employee, closeConfirmation, createdAt, updatedAt);
-//
-//	        // Save grievance
-//	        grievanceService.saveGrievance(grievance);
-//
-//	        return ResponseEntity.ok("Success");
-//
-//	    } catch (IOException e) {
-//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//	                .body("Failure: IOException while handling the attachment");
-//	    }
-//	}
-
 	@PostMapping
 	public ResponseEntity<String> createGrievance(
 	        @RequestParam("userId") int userId,
@@ -192,7 +128,7 @@ public class GrievanceController {
 	        // Fetch the grievance by ID
 	        Grievance grievance = grievanceService.getGrievanceById(grievanceId);
 	        if (grievance == null) {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Grievance not found");
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("For update status, Grievance not found");
 	        }
 
 	        // Update the status
@@ -285,7 +221,7 @@ public class GrievanceController {
 			grievanceService.updateGrievance(grievanceId, grievance);
 			return ResponseEntity.ok("Grievance updated successfully");
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Grievance not found");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("For update proof, Grievance not found");
 		}
 	}
 
@@ -311,7 +247,7 @@ public class GrievanceController {
 				grievanceService.updateGrievance(grievanceId, grievance);
 				return ResponseEntity.ok("Employee assigned successfully");
 			} else {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Grievance not found");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("For assign employee, Grievance not found");
 			}
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to assign employee");
@@ -329,7 +265,7 @@ public class GrievanceController {
 				grievanceService.updateGrievance(grievanceId, grievance);
 				return ResponseEntity.ok("Grievance closed successfully");
 			} else {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Grievance not found");
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("For Close grievance, Grievance not found");
 			}
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to close grievance");
@@ -387,14 +323,9 @@ public class GrievanceController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); // No grievances found
 		}
 
-		return ResponseEntity.ok(grievances); // Return the list of grievances
+		return ResponseEntity.ok(grievances); 
 	}
 	
-//	@PutMapping("/{id}")
-//    public ResponseEntity<Grievance> updateGrievanceStatus(@PathVariable Integer id, @RequestBody String status) {
-//        Grievance updatedGrievance = grievanceService.updateGrievanceStatus(id, status);
-//        return ResponseEntity.ok(updatedGrievance);
-//    }
 
 	@PatchMapping("/{grievanceId}/status")
 	public ResponseEntity<Grievance> updateGrievanceStatus(

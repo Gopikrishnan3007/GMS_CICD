@@ -18,7 +18,7 @@ import com.micro.grievance.service.EmployeeService;
 import com.micro.grievance.service.UserService;
 
 
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/login")
 public class LoginController {
@@ -53,7 +53,6 @@ public class LoginController {
             }
         }
         
-        // Authenticate Employee
         List<Employee> employees = employeeService.getAllEmployees();
         for (Employee employee : employees) {
             if (employee.getUsername().equals(username) && employee.getPassword().equals(password)) {
@@ -61,7 +60,6 @@ public class LoginController {
             }
         }
  
-        // Authentication failed
         return "Login failed: Invalid email or password";
     }
 	
